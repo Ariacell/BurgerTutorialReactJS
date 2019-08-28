@@ -25,7 +25,7 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
                 type={control.type}
                 // disabled={Object.entries(props.disabledControls)
                 //     .filter(key => (key[0] == control.type)).map(entry => entry[1][1])[0]}
-                //Entries enumerates our objects, so an array [Ingredients, bool] becomes {[0,[Ing,bool]],[1,[Ing,bool]],...}
+                //Entries enumerates our objects, so an array [Ingredients, bool becomes {[0,[Ing,bool]],[1,[Ing,bool]],...}
                 //This means we need to check the 0th element of the 1th entry of each element returned from "entries" against the ingredient string
                 //Then we can map the one matching entry to its 1th entry: [Ing,bool], then to the 1th entry of this: bool
                 //Then finally since we return an array still techincally we return the 0th element as the bool it is (could be improved with flatten?)

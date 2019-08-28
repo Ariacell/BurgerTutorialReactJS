@@ -12,7 +12,7 @@ interface IBuildControlProps {
 
 const BuildControl: React.FC<IBuildControlProps> = (props) => {
 
-    console.log('CONTROL ENABLEMENT: >>>>>>>> ' + props.disabled + 'key: ' + props.label);
+    //console.log('CONTROL ENABLEMENT: >>>>>>>> ' + props.disabled + 'key: ' + props.label);
 
     return (
         <div className={classes.BuildControl}>
