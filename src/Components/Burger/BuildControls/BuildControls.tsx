@@ -12,7 +12,9 @@ interface IBuildControlsProps {
 
 const BuildControls: React.FC<IBuildControlsProps> = (props) => {
 
-    
+    // console.log(props.disabledControls + " <<<<< Disabled props");
+    // console.log(">>>>>" + Object.entries(props.disabledControls)
+    // .filter(key => (key[1][0] == 'salad')) + 'Salad control props after filter');
 
     return (
         <div className={classes.BuildControls}>
@@ -21,7 +23,14 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
                 key={control.label} 
                 label={control.label}
                 type={control.type}
-                disabled={Object.entries(props.disabledControls).filter(([key, value]) => (key == control.type))[0][1]}
+                // disabled={Object.entries(props.disabledControls)
+                //     .filter(key => (key[0] == control.type)).map(entry => entry[1][1])[0]}
+                //Entries enumerates our objects, so an array [Ingredients, bool] becomes {[0,[Ing,bool]],[1,[Ing,bool]],...}
+                //This means we need to check the 0th element of the 1th entry of each element returned from "entries" against the ingredient string
+                //Then we can map the one matching entry to its 1th entry: [Ing,bool], then to the 1th entry of this: bool
+                //Then finally since we return an array still techincally we return the 0th element as the bool it is (could be improved with flatten?)
+                disabled={Object.entries(props.disabledControls)
+                    .filter(key => (key[1][0] == control.type)).map(entry => entry[1][1])[0]}
                 addIngredient={() => props.addIngredient(control.type as Ingredients)}
                 removeIngredient={() => props.removeIngredient(control.type as Ingredients)}
             />)}
