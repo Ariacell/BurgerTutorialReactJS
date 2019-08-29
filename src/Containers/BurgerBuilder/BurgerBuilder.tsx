@@ -3,6 +3,7 @@ import Aux from '../../hoc/Aux';
 import Burger from "../../Components/Burger/Burger";
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls";
 import { Ingredients, DisabledControls, EIngredients, BurgerContents } from "../../models/BurgerModels";
+import Modal from '../../Components/UI/Modal/Modal';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -11,11 +12,17 @@ const INGREDIENT_PRICES = {
     cheese: 1.1
 }
 
+interface IBurgerBuilderProps {}
+interface IBurgerBuilderState {
+    ingredients: BurgerContents,
+    totalPrice: number,
+    purchaseable: boolean
+}
 
-class BurgerBuilder extends Component {
+class BurgerBuilder extends Component<IBurgerBuilderProps,IBurgerBuilderState> {
 
 
-    state = {
+    state: IBurgerBuilderState = {
         ingredients: {
             salad: 0,
             beetroot: 0,
@@ -91,10 +98,12 @@ class BurgerBuilder extends Component {
 
         const disabledIngredients: DisabledControls = Object.entries(this.state.ingredients)
             .map((ingred) => [ingred[0] as Ingredients, ingred[1] <= 0]);
+        // for ()
         // this.setState({...this.state, purchaseable: this.checkPurchaseable});
 
         return (
             <Aux>
+                <Modal/>
                 <Burger ingredients={this.state.ingredients} />
 
                 <BuildControls

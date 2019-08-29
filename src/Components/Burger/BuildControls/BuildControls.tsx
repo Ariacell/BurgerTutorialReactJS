@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './BuildControls.module.css';
 import BuildControl from './BuildControl/BuildControl';
-import { Ingredients, Controls, DisabledControls } from '../../../models/BurgerModels';
+import { Ingredients, DisabledControls } from '../../../models/BurgerModels';
 
 interface IBuildControlsProps {
     addIngredient: (type:Ingredients) => void,
@@ -10,6 +10,13 @@ interface IBuildControlsProps {
     price: number,
     purchaseable: boolean
 }
+
+const Controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Beetroot', type: 'beetroot' },
+    { label: 'Patties', type: 'patty' },
+    { label: 'Cheese', type: 'cheese' },
+];
 
 
 const BuildControls: React.FC<IBuildControlsProps> = (props) => {
@@ -34,6 +41,7 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
                 //Then finally since we return an array still techincally we return the 0th element as the bool it is (could be improved with flatten?)
                 disabled={Object.entries(props.disabledControls)
                     .filter(key => (key[1][0] == control.type)).map(entry => entry[1][1])[0]}
+                //disabled={Object.keys(props.disabledControls)}
                 addIngredient={() => props.addIngredient(control.type as Ingredients)}
                 removeIngredient={() => props.removeIngredient(control.type as Ingredients)}
             />)}

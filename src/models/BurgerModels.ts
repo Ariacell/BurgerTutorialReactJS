@@ -8,12 +8,10 @@ export enum EIngredients {
     beetroot='beetroot'
 }
 
-export const Controls = [
-    { label: 'Salad', type: 'salad' },
-    { label: 'Beetroot', type: 'beetroot' },
-    { label: 'Patties', type: 'patty' },
-    { label: 'Cheese', type: 'cheese' },
-];
+export type KeyValuePair<U,T> = {
+    [0]: U;
+    [1]: T;
+}
 
 export type BurgerContents = { [k in Ingredients]: number};
 
