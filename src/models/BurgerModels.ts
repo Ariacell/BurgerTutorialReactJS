@@ -15,6 +15,6 @@ export const Controls = [
     { label: 'Cheese', type: 'cheese' },
 ];
 
-export type BurgerContents = { [k in EIngredients]?: number};
+export type BurgerContents = { [k in Ingredients]: number};
 
 export type DisabledControls = [Ingredients, boolean][]

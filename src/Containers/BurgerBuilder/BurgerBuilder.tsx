@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Aux from '../../hoc/Aux';
 import Burger from "../../Components/Burger/Burger";
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls";
-import { Ingredients, DisabledControls, EIngredients } from "../../models/BurgerModels";
+import { Ingredients, DisabledControls, EIngredients, BurgerContents } from "../../models/BurgerModels";
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -22,7 +22,8 @@ class BurgerBuilder extends Component {
             cheese: 0,
             patty: 0
         },
-        totalPrice: 2
+        totalPrice: 2,
+        purchaseable: false,
     }
 
     addIngredientHandler = (type: Ingredients) => {
@@ -35,7 +36,11 @@ class BurgerBuilder extends Component {
         const priceAddition = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
-        this.setState({ totalPrice: newPrice, ingredients: updatedIngredients })
+
+        this.setState({
+            totalPrice: newPrice, ingredients: updatedIngredients,
+        });
+        this.updatePurchaseState(updatedIngredients);
     }
 
     removeIngredientHandler = (type: Ingredients) => {
@@ -52,24 +57,52 @@ class BurgerBuilder extends Component {
         const priceSubstraction = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceSubstraction;
-            this.setState({ totalPrice: newPrice, ingredients: updatedIngredients })
+        this.setState({
+            totalPrice: newPrice,
+            ingredients: updatedIngredients,
+        })
+        this.updatePurchaseState(updatedIngredients);
+    }
+
+    //TODO: why are the types here so difficult? I just want this to return a boolean, not an anonymous function mapping to a boolean.
+    // isPurchaseable: () => boolean = () => {
+    //     const isPurchaseable = Object.entries(this.state.ingredients)
+    //         .map((ingred) => ingred[1])
+    //         .reduce((acc = 0,value) => acc+value);
+    //     return (isPurchaseable > 0);
+    // }
+
+    // checkPurchaseable = () => {
+    //     const isPurchaseable: boolean = Object.entries(this.state.ingredients)
+    //         .map((ingred) => ingred[1])
+    //         .reduce((acc = 0, value) => acc + value) > 0;
+    //     return isPurchaseable;
+    // }
+
+    updatePurchaseState = (newIngreds: BurgerContents) => {
+        const ingreds = newIngreds;
+        const isNonZeroIngreds = Object.entries(ingreds)
+            .map((ingred) => ingred[1])
+            .reduce((sum, el) => (sum + el), 0) > 0;
+        this.setState({ purchaseable: isNonZeroIngreds })
     }
 
     render() {
 
         const disabledIngredients: DisabledControls = Object.entries(this.state.ingredients)
-            .map((ingred) => [ingred[0] as Ingredients, ingred[1]<=0]);
-
-         console.log('DISABLED INFO: >>>>>> ' + disabledIngredients);
+            .map((ingred) => [ingred[0] as Ingredients, ingred[1] <= 0]);
+        // this.setState({...this.state, purchaseable: this.checkPurchaseable});
 
         return (
             <Aux>
-                <Burger ingredients={this.state.ingredients} price={this.state.totalPrice}/>
-                
+                <Burger ingredients={this.state.ingredients} />
+
                 <BuildControls
                     addIngredient={this.addIngredientHandler}
-                    removeIngredient={this.removeIngredientHandler} 
-                    disabledControls={disabledIngredients}/>
+                    removeIngredient={this.removeIngredientHandler}
+                    disabledControls={disabledIngredients}
+                    price={this.state.totalPrice}
+                    purchaseable={this.state.purchaseable} />
             </Aux>
         );
     }

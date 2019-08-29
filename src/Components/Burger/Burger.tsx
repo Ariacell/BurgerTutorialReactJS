@@ -6,7 +6,6 @@ import classes from './Burger.module.css';
 
 interface IBurgerProps {
     ingredients: BurgerContents,
-    price: number
 };
 
 const Burger: React.FunctionComponent<IBurgerProps> = (props) => {
@@ -36,7 +35,6 @@ const Burger: React.FunctionComponent<IBurgerProps> = (props) => {
             <BurgerIngredient key={'test1'} type="bread-top"></BurgerIngredient>
             {transformedIngredients}
             <BurgerIngredient key={'test5'} type="bread-bottom"></BurgerIngredient>
-            <div className={classes.Price}>{props.price}</div>
         </div>
     );
 }

@@ -6,7 +6,9 @@ import { Ingredients, Controls, DisabledControls } from '../../../models/BurgerM
 interface IBuildControlsProps {
     addIngredient: (type:Ingredients) => void,
     removeIngredient: (type:Ingredients) => void,
-    disabledControls: DisabledControls
+    disabledControls: DisabledControls,
+    price: number,
+    purchaseable: boolean
 }
 
 
@@ -18,6 +20,7 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
 
     return (
         <div className={classes.BuildControls}>
+            <p className={classes.Price}>Current price: <strong>{props.price.toFixed(2)}</strong></p>
             {Controls.map((control) => 
             <BuildControl 
                 key={control.label} 
@@ -34,6 +37,7 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
                 addIngredient={() => props.addIngredient(control.type as Ingredients)}
                 removeIngredient={() => props.removeIngredient(control.type as Ingredients)}
             />)}
+            <button className={classes.OrderButton} disabled={!props.purchaseable}>Order Now!</button>
         </div>
     )
 }

@@ -8,12 +8,6 @@
     font-size: 1.2rem;
 }
 
-.Burger .Price {
-    margin-top: 20px;
-}
-.Burger .Price::before {
-    content: "$";
-}
 
 @media (min-width: 1000px) and (min-height: 700px) {
     .Burger {
