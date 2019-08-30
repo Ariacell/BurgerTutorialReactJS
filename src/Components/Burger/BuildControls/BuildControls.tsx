@@ -1,14 +1,15 @@
 import React from 'react';
 import classes from './BuildControls.module.css';
 import BuildControl from './BuildControl/BuildControl';
-import { Ingredients, DisabledControls } from '../../../models/BurgerModels';
+import { Ingredients, DisabledControls, BurgerContents } from '../../../models/BurgerModels';
 
 interface IBuildControlsProps {
     addIngredient: (type:Ingredients) => void,
     removeIngredient: (type:Ingredients) => void,
     disabledControls: DisabledControls,
     price: number,
-    purchaseable: boolean
+    purchaseable: boolean,
+    setPurchasing: ()=> void
 }
 
 const Controls = [
@@ -45,7 +46,7 @@ const BuildControls: React.FC<IBuildControlsProps> = (props) => {
                 addIngredient={() => props.addIngredient(control.type as Ingredients)}
                 removeIngredient={() => props.removeIngredient(control.type as Ingredients)}
             />)}
-            <button className={classes.OrderButton} disabled={!props.purchaseable}>Order Now!</button>
+            <button className={classes.OrderButton} disabled={!props.purchaseable} onClick={props.setPurchasing}>Order Now!</button>
         </div>
     )
 }
